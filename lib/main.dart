@@ -12,7 +12,9 @@ class ToDoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: 'todoList',
-      routes: {'todoList': (context) => const ToDoListPage()},
+      routes: {
+        'todoList': (context) => const ToDoListPage(),
+      },
     );
   }
 }
