@@ -16,6 +16,7 @@ class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(right: 14),
       height: 60,
       margin: const EdgeInsets.only(bottom: 8),
       decoration: const BoxDecoration(
@@ -25,24 +26,31 @@ class _TaskCardState extends State<TaskCard> {
         ),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Checkbox(
-            value: widget.isDone,
-            onChanged: (value) {
-              setState(() {});
-            },
-          ),
-          Text(
-            widget.name,
-            style: TextStyle(
-              decoration: widget.isDone
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
-              decorationColor: const Color.fromRGBO(122, 119, 119, 1),
-              decorationThickness: 2,
-              fontSize: 18,
-              color: const Color.fromRGBO(122, 119, 119, 1),
-            ),
+          Row(
+            children: [
+              Checkbox(
+                value: widget.isDone,
+                onChanged: (value) {
+                  setState(() {});
+                },
+              ),
+              Text(
+                widget.name,
+                style: TextStyle(
+                  decoration: widget.isDone
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  decorationColor: const Color.fromRGBO(122, 119, 119, 1),
+                  decorationThickness: 2,
+                  fontSize: 18,
+                  color: widget.isDone
+                      ? const Color.fromRGBO(122, 119, 119, 1)
+                      : const Color.fromRGBO(245, 245, 245, 1),
+                ),
+              ),
+            ],
           ),
           Text(
             widget.time,
