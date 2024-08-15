@@ -17,15 +17,17 @@ class Task {
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
-  TextEditingController taskController = TextEditingController();
+  TextEditingController taskNameController = TextEditingController();
+  TextEditingController taskDateController = TextEditingController();
 
   List<Task> toDoList = [];
 
   void addTask() {
-    Task task = Task(taskController.text, '12345', false);
+    Task task = Task(taskNameController.text, taskDateController.text, false);
     setState(() {
       toDoList.add(task);
-      taskController.clear();
+      taskNameController.clear();
+      taskDateController.clear();
     });
   }
 
@@ -124,29 +126,113 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: taskController,
-                      style: const TextStyle(
-                        color: Color.fromRGBO(175, 174, 174, 1),
-                        fontSize: 18,
-                      ),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
                   GestureDetector(
                     onTap: () {
-                      addTask();
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: SizedBox(
+                              height: 340,
+                              width: double.infinity,
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    'Nova Tarefa',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 24, bottom: 8),
+                                    child: TextField(
+                                      controller: taskNameController,
+                                      style: const TextStyle(
+                                        color: Color.fromRGBO(175, 174, 174, 1),
+                                        fontSize: 18,
+                                      ),
+                                      decoration: const InputDecoration(
+                                        labelText: 'Tarefa',
+                                        hintText: 'Digite o nome da tarefa',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: taskDateController,
+                                    style: const TextStyle(
+                                      color: Color.fromRGBO(175, 174, 174, 1),
+                                      fontSize: 18,
+                                    ),
+                                    decoration: const InputDecoration(
+                                      labelText: 'Data',
+                                      hintText: 'dd/mm/aa ',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 32,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            fixedSize: const Size(160, 46),
+                                            foregroundColor: Colors.black,
+                                            backgroundColor:
+                                                const Color.fromRGBO(
+                                                    244, 112, 112, 1),
+                                            textStyle: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Cancelar'),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          fixedSize: const Size(160, 46),
+                                          foregroundColor: Colors.black,
+                                          backgroundColor: const Color.fromRGBO(
+                                              10, 182, 171, 1),
+                                          textStyle: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          addTask();
+                                        },
+                                        child: const Text('Adicionar'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
                     },
                     child: Container(
-                      width: 80,
-                      height: 80,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(10, 182, 171, 1),
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: BorderRadius.circular(35),
                         boxShadow: const [
                           BoxShadow(
                             color: Color.fromRGBO(10, 182, 171, 0.5),
