@@ -5,6 +5,7 @@ class TaskCard extends StatelessWidget {
   final String time;
   final bool isDone;
   final void Function(bool?) onChanged;
+  final void Function() onDelete;
 
   const TaskCard({
     super.key,
@@ -12,12 +13,12 @@ class TaskCard extends StatelessWidget {
     required this.time,
     required this.isDone,
     required this.onChanged,
+    required this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(right: 14),
       height: 60,
       margin: const EdgeInsets.only(bottom: 8),
       decoration: const BoxDecoration(
@@ -50,13 +51,27 @@ class TaskCard extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            time,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color.fromRGBO(122, 119, 119, 1),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                Text(
+                  time,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color.fromRGBO(122, 119, 119, 1),
+                  ),
+                ),
+                IconButton(
+                  onPressed: onDelete,
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red[400],
+                  ),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );

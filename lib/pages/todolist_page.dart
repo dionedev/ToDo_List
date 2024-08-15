@@ -21,7 +21,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
 
   List<Task> toDoList = [];
 
-  addTask() {
+  void addTask() {
     Task task = Task(taskController.text, '12345', false);
     setState(() {
       toDoList.add(task);
@@ -29,9 +29,15 @@ class _ToDoListPageState extends State<ToDoListPage> {
     });
   }
 
-  updateTaskStatus(index, isDone) {
+  void updateTaskStatus(index, isDone) {
     setState(() {
       toDoList[index].isDone = isDone;
+    });
+  }
+
+  void deleteTask(index) {
+    setState(() {
+      toDoList.removeAt(index);
     });
   }
 
@@ -101,7 +107,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
               Expanded(
                 child: ListView.builder(
                   itemCount: toDoList.length,
-                  itemBuilder: (BuildContext _, int index) {
+                  itemBuilder: (BuildContext context, int index) {
                     Task task = toDoList[index];
                     return TaskCard(
                       name: task.name,
@@ -109,6 +115,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
                       isDone: task.isDone,
                       onChanged: (isDone) {
                         updateTaskStatus(index, isDone);
+                      },
+                      onDelete: () {
+                        deleteTask(index);
                       },
                     );
                   },
@@ -146,8 +155,11 @@ class _ToDoListPageState extends State<ToDoListPage> {
                           ),
                         ],
                       ),
-                      child: Center(
-                        child: Image.asset('assets/images/plus.png'),
+                      child: const Center(
+                        child: Icon(
+                          Icons.add,
+                          size: 40,
+                        ),
                       ),
                     ),
                   ),
