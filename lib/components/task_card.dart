@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TaskCard extends StatefulWidget {
+class TaskCard extends StatelessWidget {
   final String name;
   final String time;
   final bool isDone;
+  final void Function(bool?) onChanged;
 
-  const TaskCard(
-      {super.key, required this.name, required this.time, this.isDone = false});
+  const TaskCard({
+    super.key,
+    required this.name,
+    required this.time,
+    required this.isDone,
+    required this.onChanged,
+  });
 
-  @override
-  State<TaskCard> createState() => _TaskCardState();
-}
-
-class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,21 +32,18 @@ class _TaskCardState extends State<TaskCard> {
           Row(
             children: [
               Checkbox(
-                value: widget.isDone,
-                onChanged: (value) {
-                  setState(() {});
-                },
+                value: isDone,
+                onChanged: onChanged,
               ),
               Text(
-                widget.name,
+                name,
                 style: TextStyle(
-                  decoration: widget.isDone
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
+                  decoration:
+                      isDone ? TextDecoration.lineThrough : TextDecoration.none,
                   decorationColor: const Color.fromRGBO(122, 119, 119, 1),
                   decorationThickness: 2,
                   fontSize: 18,
-                  color: widget.isDone
+                  color: isDone
                       ? const Color.fromRGBO(122, 119, 119, 1)
                       : const Color.fromRGBO(245, 245, 245, 1),
                 ),
@@ -53,7 +51,7 @@ class _TaskCardState extends State<TaskCard> {
             ],
           ),
           Text(
-            widget.time,
+            time,
             style: const TextStyle(
               fontSize: 14,
               color: Color.fromRGBO(122, 119, 119, 1),
