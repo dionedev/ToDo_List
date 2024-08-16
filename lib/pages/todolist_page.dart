@@ -23,12 +23,20 @@ class _ToDoListPageState extends State<ToDoListPage> {
   List<Task> toDoList = [];
 
   void addTask() {
-    Task task = Task(taskNameController.text, taskDateController.text, false);
-    setState(() {
-      toDoList.add(task);
-      taskNameController.clear();
-      taskDateController.clear();
-    });
+    String taskName = taskNameController.text.trim();
+    String taskDate = taskDateController.text.trim();
+
+    if (taskName.isNotEmpty && taskDate.isNotEmpty) {
+      Task task = Task(taskNameController.text, taskDateController.text, false);
+
+      setState(() {
+        toDoList.add(task);
+        taskNameController.clear();
+        taskDateController.clear();
+      });
+    } else {
+      null;
+    }
   }
 
   void updateTaskStatus(index, isDone) {
@@ -81,8 +89,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                child: const Column(
+              const SizedBox(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -149,11 +157,13 @@ class _ToDoListPageState extends State<ToDoListPage> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 24, bottom: 8),
+                                      top: 24,
+                                      bottom: 8,
+                                    ),
                                     child: TextField(
                                       controller: taskNameController,
                                       style: const TextStyle(
-                                        color: Color.fromRGBO(175, 174, 174, 1),
+                                        color: Color.fromRGBO(37, 37, 37, 1),
                                         fontSize: 18,
                                       ),
                                       decoration: const InputDecoration(
@@ -166,12 +176,12 @@ class _ToDoListPageState extends State<ToDoListPage> {
                                   TextField(
                                     controller: taskDateController,
                                     style: const TextStyle(
-                                      color: Color.fromRGBO(175, 174, 174, 1),
+                                      color: Color.fromRGBO(37, 37, 37, 1),
                                       fontSize: 18,
                                     ),
                                     decoration: const InputDecoration(
                                       labelText: 'Data',
-                                      hintText: 'dd/mm/aa ',
+                                      hintText: 'dd/mm',
                                       border: OutlineInputBorder(),
                                     ),
                                   ),
@@ -184,13 +194,17 @@ class _ToDoListPageState extends State<ToDoListPage> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(right: 10),
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
+                                        child: OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
                                             fixedSize: const Size(160, 46),
-                                            foregroundColor: Colors.black,
-                                            backgroundColor:
+                                            foregroundColor:
                                                 const Color.fromRGBO(
-                                                    244, 112, 112, 1),
+                                                    231, 67, 67, 1),
+                                            side: const BorderSide(
+                                              width: 1.2,
+                                              color: Color.fromRGBO(
+                                                  231, 67, 67, 1),
+                                            ),
                                             textStyle: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -198,6 +212,10 @@ class _ToDoListPageState extends State<ToDoListPage> {
                                           ),
                                           onPressed: () {
                                             Navigator.pop(context);
+                                            setState(() {
+                                              taskNameController.clear();
+                                              taskDateController.clear();
+                                            });
                                           },
                                           child: const Text('Cancelar'),
                                         ),
@@ -205,7 +223,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           fixedSize: const Size(160, 46),
-                                          foregroundColor: Colors.black,
+                                          foregroundColor: Colors.white,
                                           backgroundColor: const Color.fromRGBO(
                                               10, 182, 171, 1),
                                           textStyle: const TextStyle(

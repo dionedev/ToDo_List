@@ -11,6 +11,7 @@ class ToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: 'todoList',
       routes: {
         'todoList': (context) => const ToDoListPage(),
