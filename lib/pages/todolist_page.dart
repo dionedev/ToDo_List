@@ -115,23 +115,34 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: toDoList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Task task = toDoList[index];
-                    return TaskCard(
-                      name: task.name,
-                      time: task.time,
-                      isDone: task.isDone,
-                      onChanged: (isDone) {
-                        updateTaskStatus(index, isDone);
-                      },
-                      onDelete: () {
-                        deleteTask(index);
-                      },
-                    );
-                  },
-                ),
+                child: toDoList.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: toDoList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          Task task = toDoList[index];
+                          return TaskCard(
+                            name: task.name,
+                            time: task.time,
+                            isDone: task.isDone,
+                            onChanged: (isDone) {
+                              updateTaskStatus(index, isDone);
+                            },
+                            onDelete: () {
+                              deleteTask(index);
+                            },
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text(
+                          'Sem tarefas por aqui...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
