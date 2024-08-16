@@ -32,9 +32,17 @@ class TaskCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Checkbox(
-                value: isDone,
-                onChanged: onChanged,
+              Transform.scale(
+                scale: 1.2,
+                child: Checkbox(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  checkColor: const Color.fromRGBO(122, 119, 119, 1),
+                  activeColor: const Color.fromRGBO(21, 21, 21, 1),
+                  value: isDone,
+                  onChanged: onChanged,
+                ),
               ),
               Text(
                 name,
